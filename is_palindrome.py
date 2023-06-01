@@ -4,6 +4,8 @@ import operator
 from hashlib import sha256
 import string
 import re
+from ast import literal_eval
+
 #def is_hex_str(s):
 #    return set(s).issubset(string.hexdigits)
 
@@ -99,23 +101,41 @@ def check_user_input(input_):
 
     except ValueError:
 
-        # if is_hex(input_):
-        #     print("is_hex:hex value? %s" % input_)
-        #     ## TODO convert to decimal
+        if is_hex(input_):
+            try:
+                print("is_hex:hex value? %s" % input_)
+                res = int(input_,16)
+                print("is_hex:hex value? %s" % res)
+                do_it(res)
+                exit()
+                ## TODO convert to decimal
+            finally:
+                False
         if is_hex_str(input_):
-            # print("is_hex_str:hex value? %s" % input_)
-            res = int(input_,16)
-            do_it(res)
-            # print("is_hex_str:hex value? %s" % res)
-            ## TODO convert to decimal
-
+            try:
+                print("is_hex_str:hex value? %s" % input_)
+                res = int(input_,16)
+                print("is_hex_str:hex value? %s" % res)
+                do_it(res)
+                exit()
+                # print("is_hex_str:hex value? %s" % res)
+                ## TODO convert to decimal
+            finally:
+                False
         try:
             # Convert it into float
             val = float(input_)
             print("Input is a float  number. Number = ", val)
-            do_it(val)
+            exit()
         except ValueError:
-            print("No.. input is not a number. It's a string")
+            try:
+                res = literal_eval(input_)
+                print("ValueError:\nThe resultant integer is ")
+                print(res)
+                do_it(res)
+                exit()
+            finally:
+                print("No.. input is not a number. It's a string")
 
 
 input_ = input('Enter something (default 999):\n')
