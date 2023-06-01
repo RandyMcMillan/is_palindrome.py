@@ -145,8 +145,8 @@ def check_user_input(input_):
 def save_to_file(title, text):
 
     with open(str(title), mode='wt', encoding='utf-8') as myfile:
-        myfile.write('\n'.join(str(text)))
-        myfile.write('\n')
+        myfile.write(''.join(str(text)))
+        # myfile.write('\n')
 
 input_ = input('Enter something (default 999):\n')
 if input_ == "":
@@ -161,7 +161,10 @@ print(palindromes)
 save_to_file("palindromes", palindromes)
 print("xor_results")
 print(xor_results)
+save_to_file("xor_results", xor_results)
 print("xor_palindromes")
 print(xor_palindromes)
+save_to_file("xor_palindromes", xor_palindromes)
 print("hash_palindromes")
 print(hash_palindromes)
+save_to_file("hash_palindromes", hash_palindromes)
