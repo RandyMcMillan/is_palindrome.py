@@ -5,6 +5,7 @@ from hashlib import sha256
 import string
 import re
 from ast import literal_eval
+import json
 
 # 𝐴⊕𝐵=𝐴𝐵′+𝐴′𝐵
 global xor
@@ -141,6 +142,11 @@ def check_user_input(input_):
             finally:
                 print("No.. input is not a number. It's a string")
 
+def save_to_file(title, text):
+
+    with open(str(title), mode='wt', encoding='utf-8') as myfile:
+        myfile.write('\n'.join(str(text)))
+        myfile.write('\n')
 
 input_ = input('Enter something (default 999):\n')
 if input_ == "":
@@ -152,6 +158,7 @@ check_user_input(input_)
 # print the list of palindromes
 print("palindromes")
 print(palindromes)
+save_to_file("palindromes", palindromes)
 print("xor_results")
 print(xor_results)
 print("xor_palindromes")
