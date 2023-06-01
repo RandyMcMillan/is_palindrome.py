@@ -1,12 +1,25 @@
 #!/usr/bin/env python3
 
 import operator
+from hashlib import sha256
+import string
+import re
+#def is_hex_str(s):
+#    return set(s).issubset(string.hexdigits)
+
+
 
 # 𝐴⊕𝐵=𝐴𝐵′+𝐴′𝐵
 global xor
-xor = -1
+xor = 0
+
+# create an empty list to store the palindromes
+global palindromes
+palindromes = []
+
 
 def test():
+
     # Initializing two integer variables
     #print("type(xor)=%s",type(xor))
     a = xor
@@ -31,38 +44,86 @@ def test():
 
 # define a function to check if a number is a palindrome
 def is_palindrome(n):
+
     # convert the number to a string
     s = str(n)
     
     # check if the string is the same forwards and backwards
     return s == s[::-1]
 
-# define the start and end of the range
-start = 0
-end = 9999999
+def do_it(_input):
 
-# create an empty list to store the palindromes
-palindromes = []
+    # define the start and end of the range
+    start = 0
+    end = int(_input)
+    
+    # loop through the range of numbers
+    for n in range(start, end + 1):
+    
+        # if the number is a palindrome, add it to the list
+        if is_palindrome(n):
 
-# loop through the range of numbers
-for n in range(start, end+1):
+            # print("n=%s" % sha256(str(n).encode('utf-8')).hexdigest())
+    
+            # print("n=%d" % n)
+            # print("type(n)=%s",type(n))
+            palindromes.append(n)
+            if len(palindromes) > -1:
+    
+                xor = palindromes[ int(len(palindromes)-2) ] ^ palindromes[ int(len(palindromes)-1) ]
+    
+                # print("type(xor)=%s",type(xor))
+                print("%d^" % palindromes[ int(len(palindromes)-2) ] +
+                    "%d" % palindromes[ int(len(palindromes)-1) ] +
+                    "=%d" % xor)
+    
+                if is_palindrome(xor):
+                    # palindromes.append(xor)
+                    if is_palindrome(sha256(str(xor).encode('utf-8')).hexdigest()):
+                        palindromes.append(xor)
+                        # print(sha256(str(xor).encode('utf-8')).hexdigest())
 
-    # if the number is a palindrome, add it to the list
-    if is_palindrome(n):
+def is_hex(s):
+    return re.fullmatch(r"^[0-9a-fA-F]$", s or "") is not None
 
-        # print("n=%d" % n)
-        # print("type(n)=%s",type(n))
-        palindromes.append(n)
-        if len(palindromes) > -1:
+def is_hex_str(s):
+    return set(s).issubset(string.hexdigits)
 
-            xor = palindromes[ int(len(palindromes)-2) ] ^ palindromes[ int(len(palindromes)-1) ]
 
-            # print("type(xor)=%s",type(xor))
-            print("%d^" % palindromes[ int(len(palindromes)-2) ]
-            +"%d" % palindromes[ int(len(palindromes)-1) ]+"=%d" % xor)
+def check_user_input(input_):
+    try:
+        # Convert it into integer
+        val = int(input_)
+        # print("Input is an integer number. Number = ", val)
+        do_it(val)
 
-            if is_palindrome(xor):
-                palindromes.append(xor)
+    except ValueError:
+
+        # if is_hex(input_):
+        #     print("is_hex:hex value? %s" % input_)
+        #     ## TODO convert to decimal
+        if is_hex_str(input_):
+            # print("is_hex_str:hex value? %s" % input_)
+            res = int(input_,16)
+            do_it(res)
+            # print("is_hex_str:hex value? %s" % res)
+            ## TODO convert to decimal
+
+        try:
+            # Convert it into float
+            val = float(input_)
+            print("Input is a float  number. Number = ", val)
+            do_it(val)
+        except ValueError:
+            print("No.. input is not a number. It's a string")
+
+
+input_ = input('Enter something (default 999):\n')
+if input_ == "":
+    input_ = 999
+
+check_user_input(input_)
+
 
 # print the list of palindromes
 print(palindromes)
