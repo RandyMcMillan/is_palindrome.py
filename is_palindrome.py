@@ -89,6 +89,7 @@ def do_it(_input):
                         print(sha256(str(xor).encode('utf-8')).hexdigest())
 
                     xor_palindromes.append(xor)
+    save_to_files()
 
 def is_hex(s):
     return re.fullmatch(r"^[0-9a-fA-F]$", s or "") is not None
@@ -148,23 +149,26 @@ def save_to_file(title, text):
         myfile.write(''.join(str(text)))
         # myfile.write('\n')
 
+def save_to_files():
+    # print the list of palindromes
+    print("palindromes")
+    print(palindromes)
+    save_to_file("palindromes", palindromes)
+    print("xor_results")
+    print(xor_results)
+    save_to_file("xor_results", xor_results)
+    print("xor_palindromes")
+    print(xor_palindromes)
+    save_to_file("xor_palindromes", xor_palindromes)
+    print("hash_palindromes")
+    print(hash_palindromes)
+    save_to_file("hash_palindromes", hash_palindromes)
+
+
+
 input_ = input('Enter something (default 999):\n')
 if input_ == "":
     input_ = 999
 
 check_user_input(input_)
 
-
-# print the list of palindromes
-print("palindromes")
-print(palindromes)
-save_to_file("palindromes", palindromes)
-print("xor_results")
-print(xor_results)
-save_to_file("xor_results", xor_results)
-print("xor_palindromes")
-print(xor_palindromes)
-save_to_file("xor_palindromes", xor_palindromes)
-print("hash_palindromes")
-print(hash_palindromes)
-save_to_file("hash_palindromes", hash_palindromes)
