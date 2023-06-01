@@ -6,11 +6,6 @@ import string
 import re
 from ast import literal_eval
 
-#def is_hex_str(s):
-#    return set(s).issubset(string.hexdigits)
-
-
-
 # 𝐴⊕𝐵=𝐴𝐵′+𝐴′𝐵
 global xor
 xor = 0
@@ -18,7 +13,12 @@ xor = 0
 # create an empty list to store the palindromes
 global palindromes
 palindromes = []
-
+global xor_results
+xor_results = []
+global xor_palindromes
+xor_palindromes = []
+global hash_palindromes
+hash_palindromes = []
 
 def test():
 
@@ -73,6 +73,7 @@ def do_it(_input):
             if len(palindromes) > -1:
     
                 xor = palindromes[ int(len(palindromes)-2) ] ^ palindromes[ int(len(palindromes)-1) ]
+                xor_results.append(n)
     
                 # print("type(xor)=%s",type(xor))
                 print("%d^" % palindromes[ int(len(palindromes)-2) ] +
@@ -80,10 +81,13 @@ def do_it(_input):
                     "=%d" % xor)
     
                 if is_palindrome(xor):
+
                     # palindromes.append(xor)
                     if is_palindrome(sha256(str(xor).encode('utf-8')).hexdigest()):
-                        palindromes.append(xor)
-                        # print(sha256(str(xor).encode('utf-8')).hexdigest())
+                        hash_palindromes.append(xor)
+                        print(sha256(str(xor).encode('utf-8')).hexdigest())
+
+                    xor_palindromes.append(xor)
 
 def is_hex(s):
     return re.fullmatch(r"^[0-9a-fA-F]$", s or "") is not None
@@ -146,4 +150,11 @@ check_user_input(input_)
 
 
 # print the list of palindromes
+print("palindromes")
 print(palindromes)
+print("xor_results")
+print(xor_results)
+print("xor_palindromes")
+print(xor_palindromes)
+print("hash_palindromes")
+print(hash_palindromes)
