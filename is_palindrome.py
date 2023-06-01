@@ -19,6 +19,10 @@ global xor_palindromes
 xor_palindromes = []
 global hash_palindromes
 hash_palindromes = []
+global start
+start = "0"
+global stop
+stop = "9999999"
 
 # define a function to check if a number is a palindrome
 def is_palindrome(n):
@@ -29,14 +33,14 @@ def is_palindrome(n):
     # check if the string is the same forwards and backwards
     return s == s[::-1]
 
-def do_it(_input):
+def do_it(start, stop):
     
     # define the start and end of the range
-    start = -1
-    end = int(_input)
+    start = int(start)
+    stop = int(stop)
     
     # loop through the range of numbers
-    for n in range(start, end + 1):
+    for n in range(start, stop + 1):
     
         # if the number is a palindrome, add it to the list
         if is_palindrome(n):
@@ -67,6 +71,13 @@ def do_it(_input):
     # write for each iteration
     save_to_files()
 
+
+def is_int(s):
+    print("%s" % type(s))
+    print("type(s)=%s",type(s))
+
+    #if type(s) == ""
+
 def is_hex(s):
     
     return re.fullmatch(r"^[0-9a-fA-F]$", s or "") is not None
@@ -76,41 +87,49 @@ def is_hex_str(s):
     return set(s).issubset(string.hexdigits)
     
     
-def check_user_input(input_):
+def check_user_input(start, stop):
     
     try:
-        # Convert it into integer
-        val = int(input_)
-        do_it(val)
+        if not (is_hex(start) and is_hex(stop)):
+            # Convert it into integer
+            start = int(start)
+            stop = int(stop)
+            do_it(start, stop)
     
     except ValueError:
     
-        if is_hex(input_):
+        if is_hex(start) and is_hex(stop):
             try:
-                print("is_hex:hex value? %s" % input_)
-                res = int(input_,16)
-                print("is_hex:hex value? %s" % res)
-                do_it(res)
+                print("is_hex:hex value? %s" % start)
+                print("is_hex:hex value? %s" % stop)
+                start = int(start, 16)
+                stop = int(stop, 16)
+                print("is_hex:hex value? %s" % start)
+                print("is_hex:hex value? %s" % stop)
+                do_it(start, stop)
                 exit()
             finally:
                 False
-        if is_hex_str(input_):
+        if is_hex_str(start) and is_hex_str(stop):
             try:
-                print("is_hex_str:hex value? %s" % input_)
-                res = int(input_,16)
-                print("is_hex_str:hex value? %s" % res)
-                do_it(res)
+                print("is_hex_str:hex value? %s" % start)
+                print("is_hex_str:hex value? %s" % stop)
+                start = int(start, 16)
+                stop = int(stop, 16)
+                print("is_hex_str:hex value? %s" % start)
+                print("is_hex_str:hex value? %s" % stop)
+                do_it(start, stop)
                 exit()
             finally:
                 False
         try:
             # Convert it into float
-            val = float(input_)
+            val = float(start)
             print("Input is a float  number. Number = ", val)
             exit()
         except ValueError:
             try:
-                res = literal_eval(input_)
+                res = literal_eval(start)
                 print("ValueError:\nThe resultant integer is ")
                 print(res)
                 do_it(res)
@@ -146,8 +165,13 @@ def save_to_files():
     save_to_file("hash_palindromes", hash_palindromes)
     
     
-input_ = input('Enter something (default 999999):\n')
-if input_ == "":
-    input_ = 999999
+start = input('Enter start value:(default 0):\n')
+if start == "":
+    start = 0
+is_int(start)
+stop = input('Enter stop value:(default 9999999):\n')
+if stop == "":
+    stop = 9999999
+is_int(stop)
     
-check_user_input(input_)
+check_user_input(start, stop)
