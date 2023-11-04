@@ -25,8 +25,13 @@ def loop(lb, ub):
 
     # print the list of palindromes
     if len(palindromes) > 0:
-        print(palindromes)
+        ## print(palindromes)
+        ## print('[{}]'.format(', '.join(str(x)[2:] for x in palindromes)))
+        print('[{}]'.format(', '.join(str(x) for x in palindromes)))
         hexlist = list(map(hex, palindromes));
+        if len(hexlist) > 0:
+            ## print(hexlist)
+            print('[{}]'.format(', '.join(str(x)     for x in hexlist)))
         if len(hexlist) > 0:
             ## print(hexlist)
             print('[{}]'.format(', '.join(str(x)[2:] for x in hexlist)))
