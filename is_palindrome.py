@@ -26,6 +26,10 @@ def loop(lb, ub):
     # print the list of palindromes
     if len(palindromes) > 0:
         print(palindromes)
+        hexlist = list(map(hex, palindromes));
+        if len(hexlist) > 0:
+            ## print(hexlist)
+            print('[{}]'.format(', '.join(str(x) for x in hexlist)))
 
 if (args_count := len(sys.argv)) == 3:
 
